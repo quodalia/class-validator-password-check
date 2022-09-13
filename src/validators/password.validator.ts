@@ -3,7 +3,7 @@ import {
   ValidationOptions,
   ValidationArguments,
   ValidatorConstraint,
-  ValidatorConstraintInterface,
+  ValidatorConstraintInterface
 } from "class-validator";
 import { PasswordValidationRequirement } from "../models/password-validation-requirement.model";
 
@@ -82,8 +82,8 @@ export function IsPasswordValid(
           }
 
           return true; // you can return a Promise<boolean> here as well, if you want to make async validation
-        },
-      },
+        }
+      }
     });
   };
 }
@@ -125,20 +125,23 @@ export class PasswordValidation implements ValidatorConstraintInterface {
     const relatedValue = args.constraints[0] as PasswordValidationRequirement;
 
     if (relatedValue.mustContainUpperLetter) {
-      if (!StringUtilities.containsUpperCase(value)) return "Password must contain uppercase";
+      if (!StringUtilities.containsUpperCase(value))
+        return "Password must contain at least one uppercase";
     }
 
     if (relatedValue.mustContainLowerLetter) {
-      if (!StringUtilities.containsLowerCase(value)) return "Password must contain lowercase";
+      if (!StringUtilities.containsLowerCase(value))
+        return "Password must contain at least one lowercase";
     }
 
     if (relatedValue.mustContainNumber) {
-      if (!StringUtilities.containsNumber(value)) return "Password must contain number";
+      if (!StringUtilities.containsNumber(value))
+        return "Password must contain at least one number";
     }
 
     if (relatedValue.mustContainSpecialCharacter) {
       if (!StringUtilities.containsSpecialCharacter(value))
-        return "Password must contain special characters";
+        return "Password must contain at least one special character";
     }
 
     return "";
